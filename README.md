@@ -66,7 +66,7 @@ MySQL
 ```
 <sequence key="prepareQueryCall"/>
 ```
-4. Invoke the *GetEmployeeAddressEP* endpoint to retrieve the Employee (if existing)
+4. Invoke the *EmployeeEP* endpoint to retrieve the Employee (if existing)
 ```
 <call>
         <endpoint key="EmployeeEP"/>
