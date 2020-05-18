@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="postCall" xmlns="http://ws.apache.org/ns/synapse">
+    <property
+        expression="json-eval($.Employees.Employee[0].EmployeeNumber)"
+        name="EmployeeNumberFroDB" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property
+        expression="get-property('EmployeeNumberFroDB') = get-property('EmployeeNumber')"
+        name="updateFlag" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <log level="custom">
+        <property expression="get-property('updateFlag')"
+            name="updateFlag" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
+    <property name="Content-Type" scope="default" type="STRING" value="application/json"/>
+    <property action="remove" name="REST_URL_POSTFIX" scope="default"/>
+    <header name="Accept" scope="transport" value="application/json"/>
+    <enrich>
+        <source clone="true" property="ORIGINAL_PAYLOAD" type="property"/>
+        <target action="replace" type="body"/>
+    </enrich>
+</sequence>
