@@ -48,8 +48,21 @@ MySQL
 ### Open EI and show the Data Services created (eventually create it from scratch)
 ### Open Integration Studio and show the existing sequences and EPs
 ### Create a new sequence: InsertOrUpdateEmployee
-#### description of the sequence: 
-1. accepts Employee json message
-2. performs a query (invoking EmployeeDS GET REST resource) to check whether the employee is in the DB already (using EmployeeNumber as key)
-3. If it exists, an update is executed using the PUT resource, else an insert via POST
-
+#### Description of the sequence:
+1. The sequence is meant to be used by all the different proxies
+2. accepts Employee json message
+3. performs a query (invoking EmployeeDS GET REST resource) to check whether the employee is in the DB already (using EmployeeNumber as key)
+4. If it exists, an update is executed using the PUT resource, else an insert via POST
+#### Steps of the sequence
+1. Log the input message
+```
+<log level="full"/>
+```
+2. Add a property to get the EmployeeNumber:
+```
+<property description="getEmployeeNumber" expression="json-eval($.EmployeeData.EmployeeNumber)" name="EmployeeNumber" scope="default" type="STRING"/>
+```
+3. Invoke the sequence *prepareQueryCall*
+```
+<sequence key="prepareQueryCall"/>
+```
