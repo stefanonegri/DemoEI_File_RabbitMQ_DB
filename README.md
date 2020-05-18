@@ -69,10 +69,69 @@ MySQL
 4. Invoke the *GetEmployeeAddressEP* endpoint to retrieve the Employee (if existing)
 ```
 <call>
-        <endpoint key="GetEmployeeAddressEP"/>
+        <endpoint key="EmployeeEP"/>
 </call>
 ```
 5. Invoke the sequence *postCall*
 ```
 <sequence key="postCall"/>
+```
+6. Add a switch mediator, with 2 cases:
+```
+<switch description="switchOnUpdateFlag" source="get-property('updateFlag')">
+        <case regex="true">
+        ....
+        <case regex="false">
+        <default/>
+ </switch>
+```
+7. In the true branch (update case) add a property to set the PUT HTTP method and the PayloadFactory Mediator
+```
+<property description="set HTTP_METHOD" name="HTTP_METHOD" scope="axis2" type="STRING" value="PUT"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <_putemployee xmlns="">
+                        <EmployeeNumber>$1</EmployeeNumber>
+                        <LastName>$2</LastName>
+                        <FirstName>$3</FirstName>
+                        <Email>$4</Email>
+                        <Salary>$5</Salary>
+                    </_putemployee>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('EmployeeNumber')"/>
+                    <arg evaluator="json" expression="$.EmployeeData.LastName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.FirstName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.email"/>
+                    <arg evaluator="json" expression="$.SalaryData.AnnualGrossSalary"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="EmployeeEP"/>
+            </call>
+```
+8. In the false branch (insert case) add a property to set the POST HTTP method and the PayloadFactory Mediator, followed by a Call to the EmpployeeDS EP
+```
+           <property description="set HTTP_METHOD" name="HTTP_METHOD" scope="axis2" type="STRING" value="POST"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <_postemployee xmlns="">
+                        <EmployeeNumber>$1</EmployeeNumber>
+                        <LastName>$2</LastName>
+                        <FirstName>$3</FirstName>
+                        <Email>$4</Email>
+                        <Salary>$5</Salary>
+                    </_postemployee>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('EmployeeNumber')"/>
+                    <arg evaluator="json" expression="$.EmployeeData.LastName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.FirstName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.email"/>
+                    <arg evaluator="json" expression="$.SalaryData.AnnualGrossSalary"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="EmployeeEP"/>
+            </call>
 ```
