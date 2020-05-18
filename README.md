@@ -38,7 +38,7 @@ MySQL
 
 ## Import or configure data services and sequences
 ### import (or create) data services: 
-- EmployeeDS [source:] (supportingSeq&EP/EmployeeDS.xml).
+- EmployeeDS [source:](supportingSeq&EP/EmployeeDS.xml)
 ### import supporting sequences:
 - prepareQueryCall
 - postCall
