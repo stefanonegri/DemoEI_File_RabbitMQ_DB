@@ -1,4 +1,4 @@
-<endpoint xmlns="http://ws.apache.org/ns/synapse" name="GetEmployeeAddressEP">
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="EmployeeEP">
    <address uri="http://localhost:8280/services/EmployeeDS/Employee">
       <suspendOnFailure>
          <progressionFactor>1.0</progressionFactor>
