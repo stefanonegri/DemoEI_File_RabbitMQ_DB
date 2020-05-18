@@ -1,0 +1,16 @@
+{
+  "EmployeeData": {
+    "EmployeeNumber": "12",
+    "FirstName": "John",
+    "LastName": "Doe",
+    "address": "California",
+    "City": "San Francisco",
+    "phone": "8770586755",
+    "dob": "1990-03-19",
+    "email": "johndoe@gmail.com"
+  },
+  "SalaryData": {
+  "Category": "A",
+  "AnnualGrossSalary": "23000"
+  }
+}
