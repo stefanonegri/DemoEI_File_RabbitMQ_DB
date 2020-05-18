@@ -38,10 +38,10 @@ MySQL
 
 ## Import or configure data services and sequences
 ### import (or create) data services: 
-- EmployeeDS [source:](supportingSeq&EP/EmployeeDS.xml)
+- EmployeeDS [(source)](supportingSeq&EP/EmployeeDS.xml)
 ### import supporting sequences:
-- prepareQueryCall
-- postCall
+- prepareQueryCall [(source)](supportingSeq&EP/prepareQueryCall.xml)
+- postCall [(source)](supportingSeq&EP/postCall.xml)
 ### import or configure EP:
-- GetEmployeeAddressEP (type: Address Enpoint)
+- GetEmployeeAddressEP (type: Address Enpoint) [(source)](supportingSeq&EP/GetEmployeeAddressEP.xml)
 
