@@ -35,3 +35,13 @@ MySQL
 ```
 ### Configure Files
 - create the following folders, where *<FILE_HOME>* is the base location: *<FILE_HOME>/failure*, *<FILE_HOME>/in*, *<FILE_HOME>/done*
+
+## Import or configure data services and sequences
+### import (or create) data services: 
+- EmployeeDS 
+### import supporting sequences:
+- prepareQueryCall
+- postCall
+### import or configure EP:
+- GetEmployeeAddressEP (type: Address Enpoint)
+
