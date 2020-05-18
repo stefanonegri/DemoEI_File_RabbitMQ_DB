@@ -62,7 +62,17 @@ MySQL
 ```
 <property description="getEmployeeNumber" expression="json-eval($.EmployeeData.EmployeeNumber)" name="EmployeeNumber" scope="default" type="STRING"/>
 ```
-3. Invoke the sequence *prepareQueryCall*
+3. Invoke (and explain) the sequence *prepareQueryCall*
 ```
 <sequence key="prepareQueryCall"/>
+```
+4. Invoke the *GetEmployeeAddressEP* endpoint to retrieve the Employee (if existing)
+```
+<call>
+        <endpoint key="GetEmployeeAddressEP"/>
+</call>
+```
+5. Invoke the sequence *postCall*
+```
+<sequence key="postCall"/>
 ```
