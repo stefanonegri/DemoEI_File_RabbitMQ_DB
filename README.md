@@ -37,11 +37,19 @@ MySQL
 - create the following folders, where *<FILE_HOME>* is the base location: *<FILE_HOME>/failure*, *<FILE_HOME>/in*, *<FILE_HOME>/done*
 
 ## Import or configure data services and sequences
-### import (or create) data services: 
-- EmployeeDS [(source)](supportingSeq&EP/EmployeeDS.xml)
-### import supporting sequences:
+### import (or create) data services in the EI: 
+- EmployeeDS [(source)](supportingSeq&EP/EmployeeDS.xml); it includes resources to insert, update, or retreive Employee per EmployeeNumber.
+### import supporting sequences in an Integration Studio project (create it):
 - prepareQueryCall [(source)](supportingSeq&EP/prepareQueryCall.xml)
 - postCall [(source)](supportingSeq&EP/postCall.xml)
-### import or configure EP:
+### import or configure EP in the same Integration Studio project:
 - GetEmployeeAddressEP (type: Address Enpoint) [(source)](supportingSeq&EP/GetEmployeeAddressEP.xml)
+## Start the DEMO
+### Open EI and show the Data Services created (eventually create it from scratch)
+### Open Integration Studio and show the existing sequences and EPs
+### Create a new sequence: InsertOrUpdateEmployee
+#### description of the sequence: 
+1. accepts Employee json message
+2. performs a query (invoking EmployeeDS GET REST resource) to check whether the employee is in the DB already (using EmployeeNumber as key)
+3. If it exists, an update is executed using the PUT resource, else an insert via POST
 
