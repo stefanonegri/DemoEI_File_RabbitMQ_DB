@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="EmployeeHttpProxy" startOnLoad="true" transports="http" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <sequence key="InsertOrUpdateEmployee"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
