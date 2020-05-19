@@ -144,7 +144,7 @@ The proxy service aims to expose a service taht can receive an http(s)/json inpu
 3. Drag and drop the *Respond* Mediator
 4. (eventually) Run the embedded MI, test the service and show debug functionalities
 #### How to test the service
-create a file [Employee.json](testdata/Employee.json) and send it as HTTP POST or run the [curl](testdata/scripts/curl) command.
+create a file [Employee.json](testdata/Employee.json) and send it as HTTP POST or run the [curl](testdata/scripts/curl_MI) command.
 ### Create Proxy Service *EmployeeRMQProxy*
 #### Description of the service
 The proxy service get a json message with the Employee data from a the RabbitMQ *queue* and invokes the *InsertOrUpdateEmployee* sequence to update the DB accordingly.
@@ -182,5 +182,7 @@ The proxy service get a json message with the Employee data from the file system
 ### Import the CAR in EI
 ## How to test the services
 ### Test http proxy
+Send the message in [Employee.json](testdata/Employee.json) as HTTP POST or run the following [curl command](testdata/scripts/curl)
+
 
 
