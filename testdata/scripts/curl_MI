@@ -1,0 +1,1 @@
+curl --location --request POST 'localhost:8290/services/EmployeeHttpProxy' --header 'Content-Type: application/json' --data-raw '{"EmployeeData":{"EmployeeNumber":14,"FirstName":"Gary","LastName":"Doe","address":"California","City":"SanFrancisco","phone":"8770586755","dob":"1990-03-19","email":"johndoe@hotmail.com"},"SalaryData":{"Category":"A","AnnualGrossSalary":"23000"}}'
