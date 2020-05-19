@@ -189,5 +189,7 @@ Send the message in [Employee.json](testdata/Employee.json) as HTTP POST or run 
 sh run.sh $(cat TrimEmployee.json)
 ```
 ### Test File service
-
 - copy the file Employee.json in *<FILE_HOME>/in*
+### Show the execution of the services
+- show the log of the EI
+- Show the actual change in the DB
