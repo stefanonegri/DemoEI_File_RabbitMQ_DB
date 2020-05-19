@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="InsertOrUpdateEmployee" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="full"/>
+    <property description="getEmployeeNumber" expression="json-eval($.EmployeeData.EmployeeNumber)" name="EmployeeNumber" scope="default" type="STRING"/>
+    <sequence key="prepareQueryCall"/>
+    <call>
+        <endpoint key="EmployeeEP"/>
+    </call>
+    <log level="full"/>
+    <sequence key="postCall"/>
+    <switch description="switchOnUpdateFlag" source="get-property('updateFlag')">
+        <case regex="true">
+            <log>
+                <property name="flag" value="update"/>
+            </log>
+            <property description="set HTTP_METHOD" name="HTTP_METHOD" scope="axis2" type="STRING" value="PUT"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <_putemployee xmlns="">
+                        <EmployeeNumber>$1</EmployeeNumber>
+                        <LastName>$2</LastName>
+                        <FirstName>$3</FirstName>
+                        <Email>$4</Email>
+                        <Salary>$5</Salary>
+                    </_putemployee>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('EmployeeNumber')"/>
+                    <arg evaluator="json" expression="$.EmployeeData.LastName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.FirstName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.email"/>
+                    <arg evaluator="json" expression="$.SalaryData.AnnualGrossSalary"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="EmployeeEP"/>
+            </call>
+        </case>
+        <case regex="false">
+            <log>
+                <property name="flag" value="insert"/>
+            </log>
+            <property description="set HTTP_METHOD" name="HTTP_METHOD" scope="axis2" type="STRING" value="POST"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <_postemployee xmlns="">
+                        <EmployeeNumber>$1</EmployeeNumber>
+                        <LastName>$2</LastName>
+                        <FirstName>$3</FirstName>
+                        <Email>$4</Email>
+                        <Salary>$5</Salary>
+                    </_postemployee>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('EmployeeNumber')"/>
+                    <arg evaluator="json" expression="$.EmployeeData.LastName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.FirstName"/>
+                    <arg evaluator="json" expression="$.EmployeeData.email"/>
+                    <arg evaluator="json" expression="$.SalaryData.AnnualGrossSalary"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="EmployeeEP"/>
+            </call>
+        </case>
+        <default/>
+    </switch>
+</sequence>
