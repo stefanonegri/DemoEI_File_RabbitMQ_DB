@@ -43,7 +43,7 @@ MySQL
 - prepareQueryCall [(source)](supportingSeq&EP/prepareQueryCall.xml)
 - postCall [(source)](supportingSeq&EP/postCall.xml)
 ### import or configure EP in the same Integration Studio project:
-- GetEmployeeAddressEP (type: Address Enpoint) [(source)](supportingSeq&EP/GetEmployeeAddressEP.xml)
+- EmployeeEP (type: Address Enpoint) [(source)](supportingSeq&EP/GetEmployeeAddressEP.xml)
 ## Start the DEMO
 ### Open EI and show the Data Services created (eventually create it from scratch)
 ### Open Integration Studio and show the existing sequences and EPs
@@ -140,10 +140,47 @@ MySQL
 The proxy service aims to expose a service taht can receive an http(s)/json input with the Employee data and invokes the *InsertOrUpdateEmployee* sequence to update the DB accordingly
 #### Step to create the proxy
 1. Add a new proxy service with name: *EmployeeHttpProxy*; type: *Custom Proxy*; transports: *http, https*
-2. Drag and drop the defined sequence *InsertOrUpdateEmployee*
+2. Drag and drop the defined sequence *InsertOrUpdateEmployee* in the in sequence part.
 3. Drag and drop the *Respond* Mediator
 4. (eventually) Run the embedded MI, test the service and show debug functionalities
 #### How to test the service
 create a file [Employee.json](testdata/Employee.json) and send it as HTTP POST or run the [curl](testdata/scripts/curl) command.
 ### Create Proxy Service *EmployeeRMQProxy*
+#### Description of the service
+The proxy service get a json message with the Employee data from a the RabbitMQ *queue* and invokes the *InsertOrUpdateEmployee* sequence to update the DB accordingly.
+#### Step to create the proxy
+1. Add a new proxy service with name: *EmployeeRMQProxy* type: *Custom Proxy*; transports: *rabbitmq* with the following parameters:
+- rabbitmq.queue.name: employee
+- rabbitmq.connection.factory: AMQPConnectionFactory
+- rabbitmq.queue.autodeclare: true
+- rabbitmq.message.content.typeapplication/json
+2. Drag and drop the defined sequence *InsertOrUpdateEmployee* in the in sequence part.
+
+### Create Proxy Service *EmployeeFileProxy*
+#### Description of the service
+The proxy service get a json message with the Employee data from the file system inbound directory and invokes the *InsertOrUpdateEmployee* sequence to update the DB accordingly.
+#### Step to create the proxy
+1. Add a new proxy service with name: *EmployeeFileProxy* type: *Custom Proxy*; transports: *vfs* with the following parameters:
+- transport.PollInterval: 15
+- transport.vfs.FileURI: file:///Users/stefanonegri/resources/Demos/EI/filepolling/in
+- transport.vfs.ContentType: application/json
+- transport.vfs.ActionAfterProcess: MOVE
+- transport.vfs.MoveAfterFailure: file:///Users/stefanonegri/resources/Demos/EI/filepolling/failure
+- transport.vfs.ActionAfterFailure: MOVE
+- transport.vfs.FileNamePattern: .*.json
+- transport.vfs.MoveAfterProcess: file:///Users/stefanonegri/resources/Demos/EI/filepolling/original
+2. Drag and drop the defined sequence *InsertOrUpdateEmployee* in the in sequence part.
+## Export the artifacts and import in EI
+### Export the following artifacts in a CAR file:
+- endpoint.EmployeeEP
+- proxy-service.EmployeeFileProxy
+- proxy-service.EmployeeRMQProxy
+- proxy-service.EmployeeHttpProxy
+- sequence.InsertOrUpdateEmployee
+- sequence.PrepareCall
+- sequence.PostCall
+### Import the CAR in EI
+## How to test the services
+### Test http proxy
+
 
