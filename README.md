@@ -135,3 +135,14 @@ MySQL
                 <endpoint key="EmployeeEP"/>
             </call>
 ```
+### Create Proxy Service *EmployeeHttpProxy*
+#### Description of the service
+The proxy service aims to expose a service taht can receive an http(s)/json input with the Employee data and invokes the *InsertOrUpdateEmployee* sequence to update the DB accordingly
+#### Step to create the proxy
+1. Add a new proxy service with name: *EmployeeHttpProxy*; type: *Custom Proxy*; transports: *http, https*
+2. Drag and drop the defined sequence *InsertOrUpdateEmployee*
+3. Drag and drop the *Respond* Mediator
+4. (eventually) Run the embedded MI, test the service and show debug functionalities
+#### How to test the service
+create a file [Employee.json](testdata/Employee.json)
+run the curl command
