@@ -144,5 +144,6 @@ The proxy service aims to expose a service taht can receive an http(s)/json inpu
 3. Drag and drop the *Respond* Mediator
 4. (eventually) Run the embedded MI, test the service and show debug functionalities
 #### How to test the service
-create a file [Employee.json](testdata/Employee.json)
-run the curl command
+create a file [Employee.json](testdata/Employee.json) and send it as HTTP POST or run the [curl](testdata/scripts/curl) command.
+### Create Proxy Service *EmployeeRMQProxy*
+
