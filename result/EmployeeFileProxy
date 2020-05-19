@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="EmployeeFileProxy" startOnLoad="true" transports="vfs" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <sequence key="InsertOrUpdateEmployee"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+    <parameter name="transport.PollInterval">15</parameter>
+    <parameter name="transport.vfs.FileURI">file:///Users/stefanonegri/resources/Demos/EI/filepolling/in</parameter>
+    <parameter name="transport.vfs.ContentType">application/json</parameter>
+    <parameter name="transport.vfs.ActionAfterProcess">MOVE</parameter>
+    <parameter name="transport.vfs.MoveAfterFailure">file:///Users/stefanonegri/resources/Demos/EI/filepolling/failure</parameter>
+    <parameter name="transport.vfs.ActionAfterFailure">MOVE</parameter>
+    <parameter name="transport.vfs.FileNamePattern">.*.json</parameter>
+    <parameter name="transport.vfs.MoveAfterProcess">file:///Users/stefanonegri/resources/Demos/EI/filepolling/original</parameter>
+</proxy>
