@@ -162,13 +162,13 @@ The proxy service get a json message with the Employee data from the file system
 #### Step to create the proxy
 1. Add a new proxy service with name: *EmployeeFileProxy* type: *Custom Proxy*; transports: *vfs* with the following parameters:
 - transport.PollInterval: 15
-- transport.vfs.FileURI: file:///Users/stefanonegri/resources/Demos/EI/filepolling/in
+- transport.vfs.FileURI: <FILE_HOME>/in
 - transport.vfs.ContentType: application/json
 - transport.vfs.ActionAfterProcess: MOVE
-- transport.vfs.MoveAfterFailure: file:///Users/stefanonegri/resources/Demos/EI/filepolling/failure
+- transport.vfs.MoveAfterFailure: <FILE_HOME>/failure
 - transport.vfs.ActionAfterFailure: MOVE
 - transport.vfs.FileNamePattern: .*.json
-- transport.vfs.MoveAfterProcess: file:///Users/stefanonegri/resources/Demos/EI/filepolling/original
+- transport.vfs.MoveAfterProcess: <FILE_HOME>/done
 2. Drag and drop the defined sequence *InsertOrUpdateEmployee* in the in sequence part.
 ## Export the artifacts and import in EI
 ### Export the following artifacts in a CAR file:
@@ -188,5 +188,6 @@ Send the message in [Employee.json](testdata/Employee.json) as HTTP POST or run 
 ```
 sh run.sh $(cat TrimEmployee.json)
 ```
+### Test File service
 
-
+- copy the file Employee.json in *<FILE_HOME>/in*
