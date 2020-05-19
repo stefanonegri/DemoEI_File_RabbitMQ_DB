@@ -183,6 +183,10 @@ The proxy service get a json message with the Employee data from the file system
 ## How to test the services
 ### Test http proxy
 Send the message in [Employee.json](testdata/Employee.json) as HTTP POST or run the following [curl command](testdata/scripts/curl)
-
+### Test RabbitMQ service
+- send the *Employee.json* message to the *employee* queue in RabbitMQ or run the following command:
+```
+sh run.sh $(cat TrimEmployee.json)
+```
 
 
