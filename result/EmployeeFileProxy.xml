@@ -14,5 +14,5 @@
     <parameter name="transport.vfs.MoveAfterFailure">file:///Users/stefanonegri/resources/Demos/EI/filepolling/failure</parameter>
     <parameter name="transport.vfs.ActionAfterFailure">MOVE</parameter>
     <parameter name="transport.vfs.FileNamePattern">.*.json</parameter>
-    <parameter name="transport.vfs.MoveAfterProcess">file:///Users/stefanonegri/resources/Demos/EI/filepolling/original</parameter>
+    <parameter name="transport.vfs.MoveAfterProcess">file:///Users/stefanonegri/resources/Demos/EI/filepolling/done</parameter>
 </proxy>
