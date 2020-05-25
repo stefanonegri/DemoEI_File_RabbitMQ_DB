@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="RabbitMQEP" xmlns="http://ws.apache.org/ns/synapse">
+    <address uri="rabbitmq:/EmployeeNotifierPollingProxy?rabbitmq.server.host.name=localhost&amp;rabbitmq.server.port=5672&amp;rabbitmq.exchange.name=EmployeeNotifier&amp;rabbitmq.queue.routing.key=ChangeEmployeeNotify">
+        <suspendOnFailure>
+            <initialDuration>-1</initialDuration>
+            <progressionFactor>1.0</progressionFactor>
+        </suspendOnFailure>
+        <markForSuspension>
+            <retriesBeforeSuspension>0</retriesBeforeSuspension>
+        </markForSuspension>
+    </address>
+</endpoint>
