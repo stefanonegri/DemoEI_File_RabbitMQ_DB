@@ -1,0 +1,1 @@
+java -cp .:/Users/stefanonegri/resources/libraries/amqp-client-5.9.0.jar:/Users/stefanonegri/resources/libraries/slf4j-api-1.7.26.jar:/Users/stefanonegri/resources/libraries/slf4j-simple-1.7.26.jar ReceiverTopic $1
