@@ -1,0 +1,87 @@
+<data name="EmployeeDS" transports="http https local">
+   <config enableOData="false" id="local">
+      <property name="driverClassName">com.mysql.jdbc.Driver</property>
+      <property name="url">jdbc:mysql://localhost:3306/Employees</property>
+      <property name="username">root</property>
+      <property name="password">tempesta_123</property>
+   </config>
+   <query id="emplyees" useConfig="local">
+      <sql>select EmployeeNumber, FirstName, LastName, Email, Salary from Employees</sql>
+      <result element="Employees" rowName="Employee">
+         <element column="EmployeeNumber" name="EmployeeNumber" xsdType="string"/>
+         <element column="FirstName" name="FirstName" xsdType="string"/>
+         <element column="LastName" name="LastName" xsdType="string"/>
+         <element column="Email" name="Email" xsdType="string"/>
+         <element column="Salary" name="Salary" xsdType="string"/>
+      </result>
+   </query>
+   <query id="employeebyID" useConfig="local">
+      <sql>select EmployeeNumber, FirstName, LastName, Email, Salary from Employees where EmployeeNumber=:EmployeeNumber</sql>
+      <result element="Employees" rowName="Employee">
+         <element column="EmployeeNumber" name="EmployeeNumber" xsdType="string"/>
+         <element column="FirstName" name="FirstName" xsdType="string"/>
+         <element column="LastName" name="LastName" xsdType="string"/>
+         <element column="Email" name="Email" xsdType="string"/>
+         <element column="Salary" name="Salary" xsdType="string"/>
+      </result>
+      <param name="EmployeeNumber" sqlType="STRING"/>
+   </query>
+   <query id="AddEmployee" useConfig="local">
+      <sql>insert into Employees (EmployeeNumber, FirstName, LastName, Email, Salary) values(:EmployeeNumber,:FirstName,:LastName,:Email,:Salary)</sql>
+      <param name="EmployeeNumber" sqlType="STRING"/>
+      <param name="FirstName" sqlType="STRING"/>
+      <param name="LastName" sqlType="STRING"/>
+      <param name="Email" sqlType="STRING"/>
+      <param name="Salary" sqlType="STRING"/>
+   </query>
+   <query id="updateEmployee" useConfig="local">
+      <sql>update Employees set LastName=:LastName, FirstName=:FirstName, Email=:Email, Salary=:Salary where EmployeeNumber=:EmployeeNumber</sql>
+      <param name="LastName" sqlType="STRING"/>
+      <param name="FirstName" sqlType="STRING"/>
+      <param name="Email" sqlType="STRING"/>
+      <param name="Salary" sqlType="STRING"/>
+      <param name="EmployeeNumber" sqlType="STRING"/>
+   </query>
+   <query id="getNotifierEmployee" useConfig="local">
+      <sql>select id, EmployeeNumber, insert_time, insertFlag, updateFlag from NotifierEmployee</sql>
+      <result outputType="json">{&#xd; "Employees": {&#xd; "Employee": [&#xd; {&#xd; "id": "$id",&#xd;"EmployeeNumber": "$EmployeeNumber",&#xd;"insertDateTime": "$insert_time",&#xd;"insertFlag": "$insertFlag",&#xd; "updateFlag": "$updateFlag"&#xd; }&#xd; ]&#xd; }&#xd;}</result>
+   </query>
+   <query id="deleteNotifierEmployee" useConfig="local">
+      <sql>delete from Employees.NotifierEmployee where id=:id</sql>
+      <param name="id" sqlType="STRING"/>
+   </query>
+   <resource method="GET" path="Employee">
+      <call-query href="emplyees"/>
+   </resource>
+   <resource method="GET" path="Employee/{EmployeeNumber}">
+      <call-query href="employeebyID">
+         <with-param name="EmployeeNumber" query-param="EmployeeNumber"/>
+      </call-query>
+   </resource>
+   <resource method="POST" path="Employee">
+      <call-query href="AddEmployee">
+         <with-param name="EmployeeNumber" query-param="EmployeeNumber"/>
+         <with-param name="FirstName" query-param="FirstName"/>
+         <with-param name="LastName" query-param="LastName"/>
+         <with-param name="Email" query-param="Email"/>
+         <with-param name="Salary" query-param="Salary"/>
+      </call-query>
+   </resource>
+   <resource method="PUT" path="Employee">
+      <call-query href="updateEmployee">
+         <with-param name="LastName" query-param="LastName"/>
+         <with-param name="FirstName" query-param="FirstName"/>
+         <with-param name="Email" query-param="Email"/>
+         <with-param name="Salary" query-param="Salary"/>
+         <with-param name="EmployeeNumber" query-param="EmployeeNumber"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="NotifierEmployee">
+      <call-query href="getNotifierEmployee"/>
+   </resource>
+   <resource method="GET" path="NotifierEmployee/{id}">
+      <call-query href="deleteNotifierEmployee">
+         <with-param name="id" query-param="id"/>
+      </call-query>
+   </resource>
+</data>
