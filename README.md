@@ -13,7 +13,7 @@ MySQL
 ## Pre Tasks
 ### Configure MySQL
 - create Database/schema: create schema Employees
-- create Table Employees: create table Employees under schema Employees using *createEmployeesTable.sql*
+- create Table Employees: create table Employees under schema Employees using *createEmployeesTable.sql*[(source)](createEmployeesTable.sql)
 - import mysql library in *<EI_HOME>lib* : *mysql-connector-java-5.1.42-bin.jar*
 ### Configure RabbitMQ
 - import rabbitmq libraries in *<EI_HOME>lib* : *amqp-client-5.9.0.jar*
