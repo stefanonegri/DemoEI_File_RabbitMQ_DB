@@ -11,4 +11,5 @@ This part of the demo shows how to catch a change in a DB table and send a messa
 
 ## Demo
 1. Create the [(NotifierEmployeeEP)](NotifierEmployeeEP.xml).
-2. Create a new proxy Proxy Service [(EmployeeNotifierPollingProxy)](EmployeeNotifierPollingProxy.xml).
+2. Create the [(RabbitMQEP)](RabbitMQEP.xml). This endpoint sends data to the Rabbit MQ exchange *EmployeeNotifier* and routingKey *ChangeEmployeeNotify*.
+3. Create a new proxy Proxy Service [(EmployeeNotifierPollingProxy)](EmployeeNotifierPollingProxy.xml).
