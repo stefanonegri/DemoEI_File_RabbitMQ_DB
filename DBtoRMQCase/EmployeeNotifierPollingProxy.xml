@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="EmployeeNotifierPollingProxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <!--log level="full"/-->
+            <log>
+                <property name="msg" value="start polling"/>
+            </log>
+            <propertyGroup description="Http call">
+                <property name="HTTP_METHOD" scope="axis2" type="STRING" value="GET"/>
+            </propertyGroup>
+            <call>
+                <endpoint key="NotifierEmployeesEP"/>
+            </call>
+            <!-- log level="full"/-->
+            <iterate attachPath="json-eval($)" continueParent="true" expression="json-eval($.Employees.Employee)" preservePayload="true" sequential="true">
+                <target>
+                    <sequence>
+                        <propertyGroup description="RabbitMQCall">
+                            <property name="OUT_ONLY" scope="default" type="STRING" value="true"/>
+                            <property name="FORCE_SC_ACCEPTED" scope="axis2" type="STRING" value="true"/>
+                        </propertyGroup>
+                        <call>
+                            <endpoint key="RabbitMQEP"/>
+                        </call>
+                        <property action="remove" name="OUT_ONLY" scope="default"/>
+                        <property action="remove" name="FORCE_SC_ACCEPTED" scope="axis2"/>
+                        <propertyGroup description="HttpCallForDelete">
+                            <property expression="json-eval($.id)" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+                            <property name="HTTP_METHOD" scope="axis2" type="STRING" value="GET"/>
+                            <property name="NO_ENTITY_BODY" scope="axis2" type="BOOLEAN" value="true"/>
+                            <property action="remove" name="TRANSPORT_HEADERS" scope="axis2"/>
+                        </propertyGroup>
+                        <log level="custom">
+                            <property expression="get-property('REST_URL_POSTFIX')" name="posturl"/>
+                        </log>
+                        <call description="delete id from DB">
+                            <endpoint key="NotifierEmployeesEP"/>
+                        </call>
+                    </sequence>
+                </target>
+            </iterate>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
