@@ -15,7 +15,12 @@ This part of the demo shows how to catch a change in a DB table and send a messa
 3. Create a new proxy Proxy Service [(EmployeeNotifierPollingProxy)](EmployeeNotifierPollingProxy.xml).
 
 ## Test the solution
-create the exchange *aaa* in RabbitMQ running the following command
-'''
-asas
-'''
+1. Create the exchange *EmployeeNotifier* in RabbitMQ running the following command
+```
+sh run.sh ChangeEmployeeNotify
+```
+2. Run one of the cases of the main demo to populate the *NotifierEmployee* buffer table
+3. Run the proxy service *EmployeeNotifierPollingProxy.xml* for example using the following command:
+```
+curl --location --request POST 'localhost:8280/services/EmployeeNotifierPollingProxy' --header 'Accept: application/json'
+```
