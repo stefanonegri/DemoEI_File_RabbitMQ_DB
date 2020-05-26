@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+xml version="1.0" encoding="UTF-8"?>
 <proxy name="EmployeeNotifierPollingProxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
@@ -12,7 +12,14 @@
             <call>
                 <endpoint key="NotifierEmployeesEP"/>
             </call>
-            <!-- log level="full"/-->
+            <log level="full"/>
+            <property expression="json-eval($.Employees$.Employees.Employee[0])" name="payload" scope="default" type="STRING"/>
+            <switch source="boolean(get-property('payload'))">
+                <case regex="false">
+                    <respond/>
+                </case>
+                <default/>
+            </switch>
             <iterate attachPath="json-eval($)" continueParent="true" expression="json-eval($.Employees.Employee)" preservePayload="true" sequential="true">
                 <target>
                     <sequence>
