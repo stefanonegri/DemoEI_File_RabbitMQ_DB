@@ -1,3 +1,7 @@
-# start rabbitmq
+# start rabbitmq:
 export PATH=$PATH:/usr/local/opt/rabbitmq/sbin
 rabbitmq-server
+
+# view and delete an exchange:
+rabbitmqctl list_exchanges
+rabbitmqadmin delete exchange name=EmployeeNotifier
